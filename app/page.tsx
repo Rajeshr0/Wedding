@@ -6,8 +6,20 @@ import { MapPin, Phone } from 'lucide-react';
 export default function WeddingPage() {
   const [showInvitation, setShowInvitation] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isFirstPlaying, setIsFirstPlaying] = useState(false);
   const flowerContainerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const firstAudioRef = useRef<HTMLAudioElement>(null);
+
+  // Auto-play first screen audio on mount
+  useEffect(() => {
+    if (firstAudioRef.current && !showInvitation) {
+      firstAudioRef.current.volume = 0.55;
+      firstAudioRef.current.play()
+        .then(() => setIsFirstPlaying(true))
+        .catch(() => setIsFirstPlaying(false));
+    }
+  }, []);
 
   useEffect(() => {
     if (!showInvitation) return;
@@ -21,6 +33,13 @@ export default function WeddingPage() {
   }, [showInvitation]);
 
   const handleOpenInvitation = () => {
+    // Stop first screen song
+    if (firstAudioRef.current) {
+      firstAudioRef.current.pause();
+      firstAudioRef.current.currentTime = 0;
+      setIsFirstPlaying(false);
+    }
+    // Start invitation song
     if (audioRef.current) {
       audioRef.current.volume = 0.65;
       audioRef.current.currentTime = 0;
@@ -31,7 +50,10 @@ export default function WeddingPage() {
 
   return (
     <>
+      {/* Invitation audio */}
       <audio ref={audioRef} loop><source src="/wedding.mp3" type="audio/mpeg" /></audio>
+      {/* First screen audio — different song, put your file as /ganpati.mp3 */}
+      <audio ref={firstAudioRef} loop><source src="/ganpati.mp3" type="audio/mpeg" /></audio>
 
       {showInvitation ? (
         /* ===== INVITATION INTERIOR ===== */
@@ -68,7 +90,7 @@ export default function WeddingPage() {
                   <div className="h-px w-12 sm:w-16 bg-gradient-to-l from-transparent to-[#d4af37]"></div>
                 </div>
                 <p className="text-sm sm:text-base md:text-lg text-[#f5e6c8] leading-relaxed mb-7 max-w-sm sm:max-w-xl hero-fadein" style={{fontFamily:"'Lora', serif",fontStyle:'italic',animationDelay:'0.7s'}}>
-                  With joyful hearts, we invite you to witness and celebrate<br />the beginning of our forever together
+                  Request the pleasure of your company<br />at the celebration of their love and union
                 </p>
                 <div className="flex items-center gap-4 sm:gap-6 justify-center mb-5 hero-fadein" style={{animationDelay:'0.8s'}}>
                   <div className="h-px w-14 sm:w-20 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"></div>
@@ -168,7 +190,7 @@ export default function WeddingPage() {
                     <div className="w-full sm:w-1/2 sm:text-right space-y-2 sm:space-y-3 bg-gradient-to-br from-[#2a1a1a]/90 to-[#3a2020]/90 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-[#d4af37]/30 relative overflow-hidden">
                       <div className="absolute top-2 right-2 text-xl sm:text-2xl opacity-25">🙏</div>
                       <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#d4af37] font-semibold">24 April 2026</p>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Path</h3>
+                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Path<span className="guj-event">( પાટ બેસવાનું )</span></h3>
                       <p className="text-[#c4a869] text-sm sm:text-base font-semibold">8:00 PM - 10:00 PM</p>
                       <p className="text-[#c4a869] text-xs sm:text-sm">Traditional prayer ceremony</p>
                     </div>
@@ -181,7 +203,7 @@ export default function WeddingPage() {
                     <div className="w-full sm:w-1/2 sm:text-left space-y-2 sm:space-y-3 bg-gradient-to-bl from-[#2a1a1a]/90 to-[#3a2020]/90 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-[#d4af37]/30 relative overflow-hidden">
                       <div className="absolute top-2 left-2 text-xl sm:text-2xl opacity-25">💃</div>
                       <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#d4af37] font-semibold">24 April 2026</p>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Sangeet & Garba</h3>
+                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Sangeet & Garba<span className="guj-event">( રાસ ગરબા )</span></h3>
                       <p className="text-[#c4a869] text-sm sm:text-base font-semibold">10:30 PM - Evening</p>
                       <p className="text-[#c4a869] text-xs sm:text-sm">Music, dance and celebration</p>
                     </div>
@@ -194,7 +216,7 @@ export default function WeddingPage() {
                     <div className="w-full sm:w-1/2 sm:text-right space-y-2 sm:space-y-3 bg-gradient-to-br from-[#2a1a1a]/90 to-[#3a2020]/90 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-[#d4af37]/30 relative overflow-hidden">
                       <div className="absolute top-2 right-2 text-xl sm:text-2xl opacity-25">🕉️</div>
                       <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#d4af37] font-semibold">25 April 2026</p>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Janoi</h3>
+                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Janoi<span className="guj-event">( જનોઈ )</span></h3>
                       <p className="text-[#c4a869] text-sm sm:text-base font-semibold">2:00 PM</p>
                       <p className="text-[#c4a869] text-xs sm:text-sm">Sacred thread ceremony</p>
                     </div>
@@ -207,7 +229,7 @@ export default function WeddingPage() {
                     <div className="w-full sm:w-1/2 sm:text-left space-y-2 sm:space-y-3 bg-gradient-to-bl from-[#2a1a1a]/90 to-[#3a2020]/90 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-[#d4af37] relative overflow-hidden">
                       <div className="absolute top-2 left-2 text-xl sm:text-2xl opacity-25">🐎</div>
                       <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#d4af37] font-semibold">26 April 2026</p>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Barat</h3>
+                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Barat<span className="guj-event">( જાન પ્રસ્થાન )</span></h3>
                       <p className="text-[#c4a869] text-sm sm:text-base font-semibold">5:00 AM</p>
                       <p className="text-[#c4a869] text-xs sm:text-sm">Groom&apos;s grand procession</p>
                     </div>
@@ -221,7 +243,7 @@ export default function WeddingPage() {
                       <div className="absolute top-2 right-2 text-xl sm:text-2xl opacity-35">🔥</div>
                       <div className="absolute inset-0 bg-gradient-to-br from-[#d4af37]/8 to-transparent"></div>
                       <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#d4af37] font-semibold relative">26 April 2026</p>
-                      <h3 className="text-3xl sm:text-4xl font-bold text-[#ffffff] relative" style={{fontFamily:"'Cormorant Garamond', serif"}}>The Wedding</h3>
+                      <h3 className="text-3xl sm:text-4xl font-bold text-[#ffffff] relative" style={{fontFamily:"'Cormorant Garamond', serif"}}>The Wedding<span className="guj-event">( હસ્ત મેળાય )</span></h3>
                       <p className="text-[#d4af37] font-semibold text-base sm:text-lg relative">6:30 AM</p>
                       <p className="text-[#c4a869] text-xs sm:text-sm relative">Main wedding ceremony</p>
                     </div>
@@ -234,7 +256,7 @@ export default function WeddingPage() {
                     <div className="w-full sm:w-1/2 sm:text-left space-y-2 sm:space-y-3 bg-gradient-to-bl from-[#2a1a1a]/90 to-[#3a2020]/90 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-[#d4af37]/30 relative overflow-hidden">
                       <div className="absolute top-2 left-2 text-xl sm:text-2xl opacity-25">🎉</div>
                       <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#d4af37] font-semibold">27 April 2026</p>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Reception</h3>
+                      <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Reception<span className="guj-event">( સ્વાગત સમારંભ )</span></h3>
                       <p className="text-[#c4a869] text-sm sm:text-base font-semibold">10:00 AM</p>
                       <p className="text-[#c4a869] text-xs sm:text-sm">Celebration dinner and dance</p>
                     </div>
@@ -260,7 +282,7 @@ export default function WeddingPage() {
                       <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d474.8161010833453!2d72.34597392895202!3d24.465871430645894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1773901079496!5m2!1sen!2sin" width="100%" height="100%" style={{border:0}} allowFullScreen loading="lazy"></iframe>
                     </div>
                     <div className="space-y-3">
-                      <p className="text-[#d4af37] font-semibold text-base sm:text-lg">BabuBhai Hansaji Rajgor</p>
+                      <p className="text-[#d4af37] font-semibold text-base sm:text-lg">BabuBhai Rajgor</p>
                       <div className="space-y-2 text-[#c4a869]">
                         <p className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" /><span className="text-xs sm:text-sm">Bhadli, Gujarat 385545</span></p>
                         <p className="flex items-start gap-2"><Phone className="w-4 h-4 mt-0.5 flex-shrink-0" /><span className="text-xs sm:text-sm">+91 80008 01817</span></p>
@@ -270,18 +292,10 @@ export default function WeddingPage() {
                   <div className="space-y-5 sm:space-y-6">
                     <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Bride&apos;s Home</h3>
                     <div className="h-48 sm:h-56 rounded-lg overflow-hidden shadow-lg border border-[#d4af37]/20">
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3450.822246193107!2d72.20809899999999!3d24.504365000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDMwJzE1LjciTiA3MsKwMTInMjkuMiJF!5e1!3m2!1sen!2sin!4v1773942268790!5m2!1sen!2sin"
-    width="100%"
-    height="100%"
-    style={{border: 0}}
-    allowFullScreen
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-  ></iframe>
-</div>
+                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3588.6780154255987!2d75.82479!3d26.913172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db6d9f5c8f6c1%3A0xabcdef1234567890!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="100%" style={{border:0}} allowFullScreen loading="lazy"></iframe>
+                    </div>
                     <div className="space-y-3">
-                      <p className="text-[#d4af37] font-semibold text-base sm:text-lg">Hariji Mafaji Purohit</p>
+                      <p className="text-[#d4af37] font-semibold text-base sm:text-lg">Hariji Purohit</p>
                       <div className="space-y-2 text-[#c4a869]">
                         <p className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" /><span className="text-xs sm:text-sm">Umedpura, Gujarat 385545</span></p>
                       </div>
@@ -360,21 +374,27 @@ export default function WeddingPage() {
                       <div className="space-y-3 sm:space-y-4">
                         <p className="text-base sm:text-xl md:text-2xl leading-[2] text-[#2d1a00]"
                           style={{fontFamily:"'Noto Serif Gujarati','Noto Sans Gujarati',serif",fontWeight:400,letterSpacing:'0.03em'}}>
-                          સરિતા સાગર ને મળે તે{' '}
-                          <span className="font-bold" style={{fontFamily:"'Noto Serif Gujarati',serif",fontWeight:700,background:'linear-gradient(90deg,#8b3a00,#d4af37,#8b3a00)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',animation:'shineAnim 4s linear infinite'}}>સંગમ</span>{' '}
-                          કહેવાય,
+                          તમે આવો તો સ્વજ નો નો{' '}
+                          <span className="font-bold" style={{fontFamily:"'Noto Serif Gujarati',serif",fontWeight:700,background:'linear-gradient(90deg,#8b3a00,#d4af37,#8b3a00)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',animation:'shineAnim 4s linear infinite'}}>સંગ</span>{' '}
+                          મળી જાય,
                         </p>
                         <p className="text-base sm:text-xl md:text-2xl leading-[2] text-[#2d1a00]"
                           style={{fontFamily:"'Noto Serif Gujarati','Noto Sans Gujarati',serif",fontWeight:400,letterSpacing:'0.03em'}}>
-                          બે આત્માના મિલન ને{' '}
-                          <span className="font-bold" style={{fontFamily:"'Noto Serif Gujarati',serif",fontWeight:700,background:'linear-gradient(90deg,#8b3a00,#d4af37,#8b3a00)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',animation:'shineAnim 4s linear infinite'}}>લગ્ન</span>{' '}
-                          કહેવાય,
+                          તમે આવો તો રંગ માં{' '}
+                          <span className="font-bold" style={{fontFamily:"'Noto Serif Gujarati',serif",fontWeight:700,background:'linear-gradient(90deg,#8b3a00,#d4af37,#8b3a00)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',animation:'shineAnim 4s linear infinite'}}>રંગ</span>{' '}
+                          ભળી જાય,
                         </p>
                         <p className="text-base sm:text-xl md:text-2xl leading-[2] text-[#2d1a00]"
                           style={{fontFamily:"'Noto Serif Gujarati','Noto Sans Gujarati',serif",fontWeight:400,letterSpacing:'0.03em'}}>
-                          અને લગ્ન માં હોંશ થી આવે તેને{' '}
-                          <span className="font-bold" style={{fontFamily:"'Noto Serif Gujarati',serif",fontWeight:700,background:'linear-gradient(90deg,#8b3a00,#d4af37,#8b3a00)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',animation:'shineAnim 4s linear infinite'}}>મહેમાન</span>{' '}
-                          કહેવાય...
+                          આમ તો લગ્ન એ{' '}
+                          <span className="font-bold" style={{fontFamily:"'Noto Serif Gujarati',serif",fontWeight:700,background:'linear-gradient(90deg,#8b3a00,#d4af37,#8b3a00)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',animation:'shineAnim 4s linear infinite'}}>પરંપરા</span>{' '}
+                          છે આપણી..
+                        </p>
+                        <p className="text-base sm:text-xl md:text-2xl leading-[2] text-[#2d1a00]"
+                          style={{fontFamily:"'Noto Serif Gujarati','Noto Sans Gujarati',serif",fontWeight:400,letterSpacing:'0.03em'}}>
+                         તમે આવો તો આ પરંપરા એક{' '}
+                          <span className="font-bold" style={{fontFamily:"'Noto Serif Gujarati',serif",fontWeight:700,background:'linear-gradient(90deg,#8b3a00,#d4af37,#8b3a00)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',animation:'shineAnim 4s linear infinite'}}>પ્રસંગ</span>{' '}
+                          બની જાય.
                         </p>
                       </div>
                       <div className="flex items-center justify-center gap-2 sm:gap-3 py-1 sm:py-2">
@@ -451,6 +471,18 @@ export default function WeddingPage() {
             .timeline-item-left,.timeline-item-right{opacity:0;}
             .timeline-item-left.animate-in{animation:slideInFromLeft 0.8s ease-out forwards;}
             .timeline-item-right.animate-in{animation:slideInFromRight 0.8s ease-out forwards;}
+            /* Gujarati event subtitle */
+            .guj-event {
+              display: block;
+              font-family: 'Noto Serif Gujarati', 'Noto Sans Gujarati', serif;
+              font-size: 0.58em;
+              font-weight: 400;
+              letter-spacing: 0.04em;
+              line-height: 1.8;
+              color: #d4af37;
+              opacity: 0.85;
+              margin-top: 0.15em;
+            }
           `}</style>
         </div>
 
@@ -509,11 +541,11 @@ export default function WeddingPage() {
           </div>
 
           {/* Goddess images */}
-          <div className="absolute left-0 bottom-4 sm:bottom-6 pointer-events-none z-20" style={{animation:'floatSlow 7s ease-in-out infinite',willChange:'transform'}}>
+          <div className="absolute left-0 bottom-10 sm:bottom-16 md:bottom-20 pointer-events-none z-20" style={{animation:'floatSlow 7s ease-in-out infinite',willChange:'transform'}}>
             <img src="/namaste.png" alt="goddess left" className="w-20 sm:w-28 md:w-36 lg:w-44 object-contain"
               style={{filter:'drop-shadow(0 0 14px rgba(212,175,55,0.75)) drop-shadow(0 0 30px rgba(212,175,55,0.3))',transform:'scaleX(1)'}} />
           </div>
-          <div className="absolute right-0 bottom-4 sm:bottom-6 pointer-events-none z-20" style={{animation:'floatSlow 7s ease-in-out 1.2s infinite',willChange:'transform'}}>
+          <div className="absolute right-0 bottom-10 sm:bottom-16 md:bottom-20 pointer-events-none z-20" style={{animation:'floatSlow 7s ease-in-out 1.2s infinite',willChange:'transform'}}>
             <img src="/namaste.png" alt="goddess right" className="w-20 sm:w-28 md:w-36 lg:w-44 object-contain"
               style={{filter:'drop-shadow(0 0 14px rgba(212,175,55,0.75)) drop-shadow(0 0 30px rgba(212,175,55,0.3))',transform:'scaleX(-1)'}} />
           </div>
@@ -579,6 +611,20 @@ export default function WeddingPage() {
 
             </div>
           </div>
+
+          {/* First screen music toggle */}
+          <button
+            onClick={()=>{
+              if(firstAudioRef.current){
+                if(isFirstPlaying){firstAudioRef.current.pause();setIsFirstPlaying(false);}
+                else{firstAudioRef.current.volume=0.55;firstAudioRef.current.play().then(()=>setIsFirstPlaying(true)).catch(()=>{});}
+              }
+            }}
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-[#d4af37] text-[#2d1a1a] p-3 sm:p-4 rounded-full shadow-lg"
+            title="Toggle music"
+          >
+            {isFirstPlaying ? "🔊" : "🔇"}
+          </button>
 
           <style jsx>{`
             @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital@0;1&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Serif+Gujarati:wght@400;500;600;700&display=swap');
