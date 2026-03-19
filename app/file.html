@@ -1,0 +1,569 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { MapPin, Phone } from 'lucide-react';
+
+export default function WeddingPage() {
+  const [showInvitation, setShowInvitation] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const flowerContainerRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    if (!showInvitation) return;
+
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+
+    const timelineItems = document.querySelectorAll('.timeline-item-left, .timeline-item-right');
+    timelineItems.forEach(item => observer.observe(item));
+
+    return () => {
+      timelineItems.forEach(item => observer.unobserve(item));
+    };
+  }, [showInvitation]);
+
+  const handleOpenInvitation = () => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.65;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.log("Play failed:", err);
+        });
+    }
+    setShowInvitation(true);
+  };
+
+  return (
+    <>
+      {/* GLOBAL AUDIO */}
+      <audio ref={audioRef} loop>
+        <source src="/wedding.mp3" type="audio/mpeg" />
+      </audio>
+
+      {showInvitation ? (
+        <div ref={flowerContainerRef} className="relative min-h-screen w-full bg-[#2d1a1a] overflow-y-auto">
+          {/* Background floral pattern */}
+          <div className="fixed inset-0 pointer-events-none opacity-15">
+            <div className="absolute inset-0 bg-pattern"></div>
+          </div>
+
+          <div className="relative z-10">
+            {/* Header - Invitation Text */}
+            <section className="relative min-h-screen flex items-center justify-center px-4 py-20 text-center overflow-hidden">
+
+              {/* BACKGROUND */}
+              <div className="absolute inset-0">
+                <img
+                  src="/bg.jpg"
+                  alt="wedding bg"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/50"></div>
+              </div>
+
+              {/* CONTENT */}
+              <div className="relative z-10 flex flex-col items-center max-w-3xl mx-auto">
+
+                {/* ICON */}
+                <img
+                  src="/icon.png"
+                  alt="icon"
+                  className="w-24 md:w-28 mb-8 drop-shadow-[0_0_20px_rgba(212,175,55,0.8)]"
+                />
+
+                {/* TOP TEXT */}
+                <p className="text-sm uppercase tracking-[0.5em] text-[#e6d3a3] mb-6">
+                  Together with their families
+                </p>
+
+                {/* NAMES */}
+                <h1
+                  className="text-5xl md:text-7xl lg:text-8xl font-semibold whitespace-nowrap mb-8"
+                  style={{
+                    fontFamily: "'Playfair Display', serif",
+                    background: "linear-gradient(90deg, #d4af37, #fff4c2, #d4af37)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    textShadow: "0 0 25px rgba(212,175,55,0.6)"
+                  }}
+                >
+                  Nitesh <span className="mx-6 text-[#fff4c2]">&</span> Meena
+                </h1>
+
+                {/* INVITE TEXT */}
+                <p className="text-lg md:text-xl text-[#f5e6c8] leading-relaxed mb-10 max-w-xl">
+                  Request the pleasure of your company<br />
+                  at the celebration of their love and union
+                </p>
+
+                {/* DATE */}
+                <div className="flex items-center gap-6 justify-center mb-8">
+                  <div className="h-px w-24 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"></div>
+                  <p className="text-2xl text-[#fff4c2] font-semibold tracking-wide">
+                    26 April 2026
+                  </p>
+                  <div className="h-px w-24 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"></div>
+                </div>
+
+                {/* LOCATION */}
+                <p className="text-[#e6d3a3] text-lg tracking-[2px] mb-14">
+                  Bhadli, Gujarat
+                </p>
+
+                {/* SCROLL ICON */}
+                <div className="flex justify-center w-full animate-bounce">
+                  <svg
+                    className="w-7 h-7 text-[#d4af37]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                    />
+                  </svg>
+                </div>
+
+              </div>
+            </section>
+
+            {/* Our Story Section */}
+            <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-[#f5e6d3]">
+              <div className="w-full max-w-5xl space-y-16">
+                <div className="text-center space-y-3">
+                  <h2 className="text-5xl md:text-6xl font-bold text-[#2d1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    Our Story
+                  </h2>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-12">
+                  {/* Groom Section */}
+                  <div className="space-y-6 text-center timeline-item-left">
+                    <div className="flex justify-center">
+                      <div className="w-64 h-64 rounded-full border-4 border-[#8b6f47] overflow-hidden shadow-lg">
+                        <img
+                          src="/nitesh.jpeg"
+                          alt="Groom"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-4xl font-bold text-[#2d1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                        Nitesh
+                      </p>
+                      <p className="text-sm uppercase tracking-widest text-[#8b6f47]">Groom</p>
+                      <div className="space-y-2 py-4 border-t border-[#d4af37]">
+                        <p className="text-xs text-[#8b6f47]">Son of</p>
+                        <p className="text-lg font-semibold text-[#2d1a1a]">Mr. BabuBhai. H Rajgor & Mrs. Radhaben. B Rajgor</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bride Section */}
+                  <div className="space-y-6 text-center timeline-item-right">
+                    <div className="flex justify-center">
+                      <div className="w-64 h-64 rounded-full border-4 border-[#8b6f47] overflow-hidden shadow-lg">
+                        <img
+                          src="/meena.jpeg"
+                          alt="Bride"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-4xl font-bold text-[#2d1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                        Meena
+                      </p>
+                      <p className="text-sm uppercase tracking-widest text-[#8b6f47]">Bride</p>
+                      <div className="space-y-2 py-4 border-t border-[#d4af37]">
+                        <p className="text-xs text-[#8b6f47]">Daughter of</p>
+                        <p className="text-lg font-semibold text-[#2d1a1a]">Mr. & Mrs. [Father & Mother Name]</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Wedding Events Section */}
+            <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-[#2d1a1a] relative">
+              {/* OM Image Background */}
+              <div className="absolute top-10 left-1/2 transform -translate-x-1/2 opacity-10 w-64 h-64">
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E2%80%94Pngtree%E2%80%94om%20tattoo%20design%20with%20lotus_8990962-NUJdcfiQh9txDeW25z0Uv92DOtNu3N.png"
+                  alt="OM Symbol"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+
+              <div className="w-full max-w-4xl relative z-10">
+                <div className="text-center mb-20 space-y-3">
+                  <p className="text-[#c4a869] text-sm uppercase tracking-widest">Events</p>
+                  <h2 className="text-6xl md:text-7xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    Wedding Events
+                  </h2>
+                  <p className="text-[#c4a869] text-base">A celebration of love and tradition</p>
+                </div>
+
+                <div className="space-y-12">
+                  {/* Event 1 - Path (Left) */}
+                  <div className="flex gap-6 md:gap-12 items-start timeline-item-left">
+                    <div className="md:w-1/2 md:text-right space-y-3 bg-[#3a2a2a] p-6 rounded-lg border border-[#d4af37]/30">
+                      <p className="text-sm uppercase tracking-widest text-[#d4af37] font-semibold">24 April 2026</p>
+                      <h3 className="text-3xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Path</h3>
+                      <p className="text-[#c4a869] font-semibold">8:00 AM - 10:00 AM</p>
+                      <p className="text-[#c4a869] text-sm">Traditional prayer ceremony</p>
+                    </div>
+                    <div className="hidden md:flex w-12 justify-center flex-col items-center">
+                      <div className="w-1 h-28 bg-gradient-to-b from-[#d4af37] to-transparent"></div>
+                    </div>
+                    <div className="md:w-1/2"></div>
+                  </div>
+
+                  {/* Event 2 - Sangeet/Garba (Right) */}
+                  <div className="flex gap-6 md:gap-12 items-start flex-row-reverse timeline-item-right">
+                    <div className="md:w-1/2 md:text-left space-y-3 bg-[#3a2a2a] p-6 rounded-lg border border-[#d4af37]/30">
+                      <p className="text-sm uppercase tracking-widest text-[#d4af37] font-semibold">24 April 2026</p>
+                      <h3 className="text-3xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Sangeet & Garba</h3>
+                      <p className="text-[#c4a869] font-semibold">10:30 AM - Evening</p>
+                      <p className="text-[#c4a869] text-sm">Music, dance and celebration</p>
+                    </div>
+                    <div className="hidden md:flex w-12 justify-center flex-col items-center">
+                      <div className="w-1 h-28 bg-gradient-to-b from-[#d4af37] to-transparent"></div>
+                    </div>
+                    <div className="md:w-1/2"></div>
+                  </div>
+
+                  {/* Event 3 - Janoi (Left) */}
+                  <div className="flex gap-6 md:gap-12 items-start timeline-item-left">
+                    <div className="md:w-1/2 md:text-right space-y-3 bg-[#3a2a2a] p-6 rounded-lg border border-[#d4af37]/30">
+                      <p className="text-sm uppercase tracking-widest text-[#d4af37] font-semibold">25 April 2026</p>
+                      <h3 className="text-3xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Janoi</h3>
+                      <p className="text-[#c4a869] font-semibold">2:00 PM</p>
+                      <p className="text-[#c4a869] text-sm">Sacred thread ceremony</p>
+                    </div>
+                    <div className="hidden md:flex w-12 justify-center flex-col items-center">
+                      <div className="w-1 h-28 bg-gradient-to-b from-[#d4af37] to-transparent"></div>
+                    </div>
+                    <div className="md:w-1/2"></div>
+                  </div>
+
+                  {/* Event 4 - Barat (Right) */}
+                  <div className="flex gap-6 md:gap-12 items-start flex-row-reverse timeline-item-right">
+                    <div className="md:w-1/2 md:text-left space-y-3 bg-[#3a2a2a] p-6 rounded-lg border border-[#d4af37]">
+                      <p className="text-sm uppercase tracking-widest text-[#d4af37] font-semibold">26 April 2026</p>
+                      <h3 className="text-3xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Barat</h3>
+                      <p className="text-[#c4a869] font-semibold">5:00 AM</p>
+                      <p className="text-[#c4a869] text-sm">Groom's grand procession</p>
+                    </div>
+                    <div className="hidden md:flex w-12 justify-center flex-col items-center">
+                      <div className="w-1 h-28 bg-gradient-to-b from-[#d4af37] to-transparent"></div>
+                    </div>
+                    <div className="md:w-1/2"></div>
+                  </div>
+
+                  {/* Event 5 - Wedding (Left - Main) */}
+                  <div className="flex gap-6 md:gap-12 items-start timeline-item-left">
+                    <div className="md:w-1/2 md:text-right space-y-3 bg-[#3a2a2a] p-6 rounded-lg border-2 border-[#d4af37]">
+                      <p className="text-sm uppercase tracking-widest text-[#d4af37] font-semibold">26 April 2026</p>
+                      <h3 className="text-4xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>The Wedding</h3>
+                      <p className="text-[#d4af37] font-semibold text-lg">6:30 AM</p>
+                      <p className="text-[#c4a869] text-sm">Main wedding ceremony</p>
+                    </div>
+                    <div className="hidden md:flex w-12 justify-center flex-col items-center">
+                      <div className="w-1 h-32 bg-gradient-to-b from-[#d4af37] via-[#d4af37] to-transparent"></div>
+                    </div>
+                    <div className="md:w-1/2"></div>
+                  </div>
+
+                  {/* Event 6 - Reception (Right) */}
+                  <div className="flex gap-6 md:gap-12 items-start flex-row-reverse timeline-item-right">
+                    <div className="md:w-1/2 md:text-left space-y-3 bg-[#3a2a2a] p-6 rounded-lg border border-[#d4af37]/30">
+                      <p className="text-sm uppercase tracking-widest text-[#d4af37] font-semibold">27 April 2026</p>
+                      <h3 className="text-3xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Reception</h3>
+                      <p className="text-[#c4a869] font-semibold">10:00 AM</p>
+                      <p className="text-[#c4a869] text-sm">Celebration dinner and dance</p>
+                    </div>
+                    <div className="hidden md:flex w-12 justify-center flex-col items-center">
+                      <div className="w-1 h-28 bg-gradient-to-b from-[#d4af37] to-transparent"></div>
+                    </div>
+                    <div className="md:w-1/2"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Venues Section */}
+            <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-[#2d1a1a]">
+              <div className="w-full max-w-4xl space-y-16">
+                <div className="text-center space-y-2">
+                  <h2 className="text-6xl md:text-7xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    Wedding Venues
+                  </h2>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-12">
+                  {/* Groom Venue */}
+                  <div className="space-y-6">
+                    <h3 className="text-3xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      Groom's Home
+                    </h3>
+                    <div className="h-56 rounded-lg overflow-hidden shadow-lg">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d474.8161010833453!2d72.34597392895202!3d24.465871430645894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1773901079496!5m2!1sen!2sin"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-[#d4af37] font-semibold text-lg">Nitesh's Residence</p>
+                      <div className="space-y-2 text-[#c4a869]">
+                        <p className="flex items-start gap-2">
+                          <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
+                          <span className="text-sm">Bhadli, Gujarat 302000</span>
+                        </p>
+                        <p className="flex items-start gap-2">
+                          <Phone className="w-4 h-4 mt-1 flex-shrink-0" />
+                          <span className="text-sm">+91 98765 43210</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bride Venue */}
+                  <div className="space-y-6">
+                    <h3 className="text-3xl font-bold text-[#ffffff]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      Bride's Home
+                    </h3>
+                    <div className="h-56 rounded-lg overflow-hidden shadow-lg">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3588.6780154255987!2d75.82479!3d26.913172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db6d9f5c8f6c1%3A0xabcdef1234567890!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1234567890"
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-[#d4af37] font-semibold text-lg">Meena's Residence</p>
+                      <div className="space-y-2 text-[#c4a869]">
+                        <p className="flex items-start gap-2">
+                          <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
+                          <span className="text-sm">Umedpura, Gujarat 302002</span>
+                        </p>
+                        <p className="flex items-start gap-2">
+                          <Phone className="w-4 h-4 mt-1 flex-shrink-0" />
+                          <span className="text-sm">+91 98765 43211</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Blessings Section */}
+            <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-[#f5e6d3]">
+              <div className="w-full max-w-4xl text-center space-y-12">
+                <div className="space-y-4 border-b-2 border-[#d4af37] pb-8">
+                  <p className="text-6xl">👑</p>
+                  <h2 className="text-5xl md:text-6xl font-bold text-[#2d1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    Blessings From Our Families
+                  </h2>
+                </div>
+
+                {/* Groom & Bride Section */}
+                <div className="grid md:grid-cols-2 gap-16 my-12">
+                  <div className="space-y-4 timeline-item-left">
+                    <p className="text-4xl font-bold text-[#2d1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      Nitesh
+                    </p>
+                    <p className="text-sm uppercase tracking-widest text-[#8b6f47]">Groom</p>
+                    <div className="space-y-2 py-4 border-t border-[#d4af37]">
+                      <p className="text-sm text-[#8b6f47]">Son of</p>
+                      <p className="text-lg font-semibold text-[#2d1a1a]">Mr. BabuBhai. H Rajgor & Mrs. Radhaben. B Rajgor</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4 timeline-item-right">
+                    <p className="text-4xl font-bold text-[#2d1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      Meena
+                    </p>
+                    <p className="text-sm uppercase tracking-widest text-[#8b6f47]">Bride</p>
+                    <div className="space-y-2 py-4 border-t border-[#d4af37]">
+                      <p className="text-sm text-[#8b6f47]">Daughter of</p>
+                      <p className="text-lg font-semibold text-[#2d1a1a]">Mr. & Mrs. [Father & Mother Name]</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quotes Section */}
+                <div className="border-y-2 border-[#d4af37] py-12 space-y-8">
+                  <div className="space-y-3">
+                    <p className="text-xl md:text-2xl italic text-[#2d1a1a] leading-relaxed" style={{ fontFamily: "'Lora', serif" }}>
+                      "Love is not just about finding the right person, but creating the right relationship. It's not about how much love you have in the beginning but how much love you build together."
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <p className="text-xl md:text-2xl italic text-[#2d1a1a] leading-relaxed" style={{ fontFamily: "'Lora', serif" }}>
+                      "A successful marriage requires falling in love many times, always with the same person."
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-8">
+                  <p className="text-2xl font-bold text-[#2d1a1a]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    Together with our families
+                  </p>
+                  <p className="text-[#8b6f47] leading-relaxed max-w-2xl mx-auto">
+                    We look forward to celebrating this auspicious occasion with you and your loved ones. Your blessings and presence will make our joy complete.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <style jsx>{`
+            @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600;700&family=Lora:ital@0;1&display=swap');
+
+            .bg-pattern {
+              background-image: radial-gradient(circle, rgba(212,175,55,0.1) 1px, transparent 1px);
+              background-size: 50px 50px;
+            }
+
+            @keyframes bounce {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-10px); }
+            }
+
+            @keyframes slideInFromLeft {
+              from {
+                opacity: 0;
+                transform: translateX(-60px);
+              }
+              to {
+                opacity: 1;
+                transform: translateX(0);
+              }
+            }
+
+            @keyframes slideInFromRight {
+              from {
+                opacity: 0;
+                transform: translateX(60px);
+              }
+              to {
+                opacity: 1;
+                transform: translateX(0);
+              }
+            }
+
+            .timeline-item-left,
+            .timeline-item-right {
+              opacity: 0;
+            }
+
+            .timeline-item-left.animate-in {
+              animation: slideInFromLeft 0.8s ease-out forwards;
+            }
+
+            .timeline-item-right.animate-in {
+              animation: slideInFromRight 0.8s ease-out forwards;
+            }
+
+            .animate-bounce {
+              animation: bounce 2s infinite;
+            }
+          `}</style>
+        </div>
+      ) : (
+        /* FIRST SCREEN */
+        <div className="min-h-screen bg-[#2d1a1a] overflow-hidden">
+
+          {/* Background */}
+          <div className="fixed inset-0 pointer-events-none opacity-20">
+            <div className="absolute inset-0 bg-pattern"></div>
+          </div>
+
+          <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 text-center space-y-8">
+            <div className="space-y-10 max-w-3xl">
+
+              <div className="text-8xl">🕉️</div>
+
+              <div className="space-y-6">
+                <p className="text-sm uppercase tracking-[0.3em] text-[#d4af37]">
+                  Together with their families
+                </p>
+
+                <h1 className="text-7xl md:text-8xl font-bold text-[#d4af37]">
+                  Nitesh & Meena
+                </h1>
+
+                <p className="text-lg text-[#d4af37]">
+                  Invite you to join us in the celebration of our love
+                </p>
+              </div>
+
+              <button
+                onClick={handleOpenInvitation}
+                className="mt-12 px-8 py-3 bg-[#d4af37] text-[#2d1a1a]"
+              >
+                Open Invitation
+              </button>
+            </div>
+          </section>
+
+          <style jsx>{`
+            .bg-pattern {
+              background-image: radial-gradient(circle, rgba(212,175,55,0.1) 1px, transparent 1px);
+              background-size: 50px 50px;
+            }
+          `}</style>
+        </div>
+      )}
+
+      {/* MUSIC BUTTON (GLOBAL - shown only after invitation opens) */}
+      {showInvitation && (
+        <button
+          onClick={() => {
+            if (audioRef.current) {
+              if (isPlaying) {
+                audioRef.current.pause();
+              } else {
+                audioRef.current.volume = 0.65;
+                audioRef.current.play();
+              }
+              setIsPlaying(!isPlaying);
+            }
+          }}
+          className="fixed bottom-6 right-6 z-50 bg-[#d4af37] text-[#2d1a1a] p-4 rounded-full"
+        >
+          {isPlaying ? "🔊" : "🔇"}
+        </button>
+      )}
+    </>
+  );
+}
