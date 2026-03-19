@@ -68,7 +68,7 @@ export default function WeddingPage() {
                   <div className="h-px w-12 sm:w-16 bg-gradient-to-l from-transparent to-[#d4af37]"></div>
                 </div>
                 <p className="text-sm sm:text-base md:text-lg text-[#f5e6c8] leading-relaxed mb-7 max-w-sm sm:max-w-xl hero-fadein" style={{fontFamily:"'Lora', serif",fontStyle:'italic',animationDelay:'0.7s'}}>
-                  Request the pleasure of your company<br />at the celebration of their love and union
+                  With joyful hearts, we invite you to witness and celebrate<br />the beginning of our forever together
                 </p>
                 <div className="flex items-center gap-4 sm:gap-6 justify-center mb-5 hero-fadein" style={{animationDelay:'0.8s'}}>
                   <div className="h-px w-14 sm:w-20 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"></div>
@@ -109,7 +109,7 @@ export default function WeddingPage() {
                       <p className="text-xs sm:text-sm uppercase tracking-widest text-[#8b6f47]">Groom</p>
                       <div className="space-y-2 py-4 border-t border-[#d4af37]">
                         <p className="text-xs text-[#8b6f47]">Son of</p>
-                        <p className="text-base sm:text-lg font-semibold text-[#2d1a1a]">Mr. BabuBhai. H Rajgor & Mrs. Radhaben. B Rajgor</p>
+                        <p className="text-base sm:text-lg font-semibold text-[#2d1a1a]">Mr. BabuBhai. Hansaji Rajgor & Mrs. Radhaben. Babubhai Rajgor</p>
                       </div>
                     </div>
                   </div>
@@ -169,7 +169,7 @@ export default function WeddingPage() {
                       <div className="absolute top-2 right-2 text-xl sm:text-2xl opacity-25">🙏</div>
                       <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#d4af37] font-semibold">24 April 2026</p>
                       <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Path</h3>
-                      <p className="text-[#c4a869] text-sm sm:text-base font-semibold">8:00 AM - 10:00 AM</p>
+                      <p className="text-[#c4a869] text-sm sm:text-base font-semibold">8:00 PM - 10:00 PM</p>
                       <p className="text-[#c4a869] text-xs sm:text-sm">Traditional prayer ceremony</p>
                     </div>
                     <div className="hidden sm:flex w-12 justify-center flex-col items-center"><div className="w-px h-28 bg-gradient-to-b from-[#d4af37] to-transparent"></div></div>
@@ -182,7 +182,7 @@ export default function WeddingPage() {
                       <div className="absolute top-2 left-2 text-xl sm:text-2xl opacity-25">💃</div>
                       <p className="text-[10px] sm:text-xs uppercase tracking-widest text-[#d4af37] font-semibold">24 April 2026</p>
                       <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Sangeet & Garba</h3>
-                      <p className="text-[#c4a869] text-sm sm:text-base font-semibold">10:30 AM - Evening</p>
+                      <p className="text-[#c4a869] text-sm sm:text-base font-semibold">10:30 PM - Evening</p>
                       <p className="text-[#c4a869] text-xs sm:text-sm">Music, dance and celebration</p>
                     </div>
                     <div className="hidden sm:flex w-12 justify-center flex-col items-center"><div className="w-px h-28 bg-gradient-to-b from-[#d4af37] to-transparent"></div></div>
@@ -260,7 +260,7 @@ export default function WeddingPage() {
                       <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d474.8161010833453!2d72.34597392895202!3d24.465871430645894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1773901079496!5m2!1sen!2sin" width="100%" height="100%" style={{border:0}} allowFullScreen loading="lazy"></iframe>
                     </div>
                     <div className="space-y-3">
-                      <p className="text-[#d4af37] font-semibold text-base sm:text-lg">BabuBhai Rajgor</p>
+                      <p className="text-[#d4af37] font-semibold text-base sm:text-lg">BabuBhai Hansaji Rajgor</p>
                       <div className="space-y-2 text-[#c4a869]">
                         <p className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" /><span className="text-xs sm:text-sm">Bhadli, Gujarat 385545</span></p>
                         <p className="flex items-start gap-2"><Phone className="w-4 h-4 mt-0.5 flex-shrink-0" /><span className="text-xs sm:text-sm">+91 80008 01817</span></p>
@@ -270,10 +270,18 @@ export default function WeddingPage() {
                   <div className="space-y-5 sm:space-y-6">
                     <h3 className="text-2xl sm:text-3xl font-bold text-[#ffffff]" style={{fontFamily:"'Cormorant Garamond', serif"}}>Bride&apos;s Home</h3>
                     <div className="h-48 sm:h-56 rounded-lg overflow-hidden shadow-lg border border-[#d4af37]/20">
-                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3588.6780154255987!2d75.82479!3d26.913172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db6d9f5c8f6c1%3A0xabcdef1234567890!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="100%" style={{border:0}} allowFullScreen loading="lazy"></iframe>
-                    </div>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3450.822246193107!2d72.20809899999999!3d24.504365000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDMwJzE1LjciTiA3MsKwMTInMjkuMiJF!5e1!3m2!1sen!2sin!4v1773942268790!5m2!1sen!2sin"
+    width="100%"
+    height="100%"
+    style={{border: 0}}
+    allowFullScreen
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+  ></iframe>
+</div>
                     <div className="space-y-3">
-                      <p className="text-[#d4af37] font-semibold text-base sm:text-lg">Hariji Purohit</p>
+                      <p className="text-[#d4af37] font-semibold text-base sm:text-lg">Hariji Mafaji Purohit</p>
                       <div className="space-y-2 text-[#c4a869]">
                         <p className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" /><span className="text-xs sm:text-sm">Umedpura, Gujarat 385545</span></p>
                       </div>
@@ -309,7 +317,7 @@ export default function WeddingPage() {
                     <p className="text-[9px] sm:text-sm uppercase tracking-widest text-[#8b6f47]">Groom</p>
                     <div className="space-y-1 sm:space-y-2 py-2 sm:py-4 border-t border-[#d4af37]">
                       <p className="text-[9px] sm:text-sm text-[#8b6f47]">Son of</p>
-                      <p className="text-[10px] sm:text-sm md:text-base font-semibold text-[#2d1a1a]">Mr. BabuBhai. H Rajgor & Mrs. Radhaben. B Rajgor</p>
+                      <p className="text-[10px] sm:text-sm md:text-base font-semibold text-[#2d1a1a]">Mr. BabuBhai. Hansaji Rajgor & Mrs. Radhaben. Babubhai Rajgor</p>
                     </div>
                     <div className="flex items-center gap-2 justify-center py-1 sm:py-2">
                       <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#d4af37]"></div>
