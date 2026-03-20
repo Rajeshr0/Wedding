@@ -6,6 +6,8 @@ import './globals.css'
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
+<meta name="google" content="notranslate" />
+
 export const metadata: Metadata = {
   title: 'Nitesh & Meena Wedding',
   description: 'Join us as we celebrate the wedding of Nitesh and Meena in Bhadli, India',
