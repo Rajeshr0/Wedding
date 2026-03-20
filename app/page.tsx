@@ -509,7 +509,7 @@ export default function WeddingPage() {
                       <span className="absolute bottom-2 right-3 text-lg sm:text-2xl text-[#d4af37] opacity-40 select-none">✾</span>
                       <div className="space-y-3 sm:space-y-4">
                         <p className="text-base sm:text-xl md:text-2xl leading-[2] text-[#2d1a00]" style={{fontFamily:"'Noto Serif Gujarati','Noto Sans Gujarati',serif",fontWeight:400,letterSpacing:'0.03em'}}>
-                          તમે આવો તો સ્વજ નો નો{' '}
+                          તમે આવો તો સ્વજનો નો{' '}
                           <span className="font-bold" style={{fontFamily:"'Noto Serif Gujarati',serif",fontWeight:700,background:'linear-gradient(90deg,#8b3a00,#d4af37,#8b3a00)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',animation:'shineAnim 4s linear infinite'}}>સંગ</span>{' '}
                           મળી જાય,
                         </p>
